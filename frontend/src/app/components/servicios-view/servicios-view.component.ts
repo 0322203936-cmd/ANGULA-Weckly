@@ -87,9 +87,11 @@ const MO_GROUPS = [
                       {{ shortLabel(key) }}
                     </th>
                   }
+                  @if (showWeekDif()) {
                   <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#eecdd3;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                     DIF
                   </th>
+                }
                 }
                 @if (showTotal()) {
                   @for (key of weekKeys(); track key) {
@@ -97,9 +99,11 @@ const MO_GROUPS = [
                       {{ shortLabel(key) }}
                     </th>
                   }
+                  @if (showWeekDif()) {
                   <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#fafafa;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                     DIF
                   </th>
+                }
                   @if (showYearTotals()) {
                     @for (yr of totYears(); track yr; let yi = $index) {
                       <th [style.borderLeft]="yi === 0 ? '3px solid #8a1c32' : '1px solid var(--pt-hdr-border)'"
@@ -108,9 +112,11 @@ const MO_GROUPS = [
                       </th>
                     }
                     @if (totYears().length >= 2) {
-                      <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#fafafa;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
+                      @if (showWeekDif()) {
+                  <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#fafafa;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                         DIF
                       </th>
+                }
                     }
                   }
                 }
@@ -138,11 +144,13 @@ const MO_GROUPS = [
                               {{ getRanchVal(key, rn, sc) > 0 ? fmt(getRanchVal(key, rn, sc)) : '' }}
                             </td>
                           }
-                          <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                          @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                               [style.color]="getRanchDif(rn, sc) !== 0 ? (getRanchDif(rn, sc) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                               [style.fontWeight]="getRanchDif(rn, sc) !== 0 ? '700' : '400'">
                             {{ getRanchDif(rn, sc) !== 0 ? (getRanchDif(rn, sc) > 0 ? '+' : '') + fmt(absVal(getRanchDif(rn, sc))) : '' }}
                           </td>
+}
                         }
                         @if (showTotal()) {
                           @for (key of weekKeys(); track key) {
@@ -153,11 +161,13 @@ const MO_GROUPS = [
                             </td>
                           }
                           @let wkDif = getWeekTotalDif(sc);
-                          <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                          @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                               [style.color]="wkDif !== 0 ? (wkDif > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                               [style.fontWeight]="wkDif !== 0 ? '700' : '400'">
                             {{ wkDif !== 0 ? (wkDif > 0 ? '+' : '') + fmt(absVal(wkDif)) : '' }}
                           </td>
+}
                           @if (showYearTotals()) {
                             @for (yr of totYears(); track yr) {
                               <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
@@ -167,11 +177,13 @@ const MO_GROUPS = [
                               </td>
                             }
                             @if (totYears().length >= 2) {
-                              <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                              @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                                   [style.color]="getTotalDif(sc) !== 0 ? (getTotalDif(sc) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                                   [style.fontWeight]="getTotalDif(sc) !== 0 ? '700' : '400'">
                                 {{ getTotalDif(sc) !== 0 ? (getTotalDif(sc) > 0 ? '+' : '') + fmt(absVal(getTotalDif(sc))) : '' }}
                               </td>
+}
                             }
                           }
                         }
@@ -193,11 +205,13 @@ const MO_GROUPS = [
                                 {{ getHcRanchVal(key, rn, sc) > 0 ? fmtHc(getHcRanchVal(key, rn, sc)) : '' }}
                               </td>
                             }
-                            <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
+                            @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
                                 [style.color]="getHcDif(rn, sc) !== 0 ? (getHcDif(rn, sc) > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                 [style.fontWeight]="getHcDif(rn, sc) !== 0 ? '700' : '400'">
                               {{ getHcDif(rn, sc) !== 0 ? (getHcDif(rn, sc) > 0 ? '+' : '') + fmtHcDiff(absVal(getHcDif(rn, sc))) : '' }}
                             </td>
+}
                           }
                           @if (showTotal()) {
                             @for (key of weekKeys(); track key) {
@@ -209,11 +223,13 @@ const MO_GROUPS = [
                               </td>
                             }
                             @let hcWkDif = getHcVal(weekKeys()[weekKeys().length - 1], sc) - getHcVal(weekKeys()[0], sc);
-                            <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
+                            @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
                                 [style.color]="hcWkDif !== 0 ? (hcWkDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                 [style.fontWeight]="hcWkDif !== 0 ? '700' : '400'">
                               {{ hcWkDif !== 0 ? (hcWkDif > 0 ? '+' : '') + fmtHcDiff(absVal(hcWkDif)) : '' }}
                             </td>
+}
                             @if (showYearTotals()) {
                               @for (yr of totYears(); track yr) {
                                 @let hcYrV = getHcYrVal(yr, sc);
@@ -225,11 +241,13 @@ const MO_GROUPS = [
                               }
                               @if (totYears().length >= 2) {
                                 @let hcTotDif = getHcTotalDif(sc);
-                                <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
+                                @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
                                     [style.color]="hcTotDif !== 0 ? (hcTotDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                     [style.fontWeight]="hcTotDif !== 0 ? '700' : '400'">
                                   {{ hcTotDif !== 0 ? (hcTotDif > 0 ? '+' : '') + fmtHcDiff(absVal(hcTotDif)) : '' }}
                                 </td>
+}
                               }
                             }
                           }
@@ -254,16 +272,20 @@ const MO_GROUPS = [
                                     </td>
                                   }
                                   @let dif = getEsquejeDif(flor);
-                                  <td style="padding:3px 6px;border-bottom:1px solid #bbf7d0;border-right:1px solid #bbf7d0;text-align:right;background:#f0fdf4;"
+                                  @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #bbf7d0;border-right:1px solid #bbf7d0;text-align:right;background:#f0fdf4;"
                                       [style.color]="dif !== 0 ? (dif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                       [style.fontWeight]="dif !== 0 ? '700' : '400'">
                                     {{ dif !== 0 ? (dif > 0 ? '+' : '') + fmtHcDiff(absVal(dif)) : '' }}
                                   </td>
+}
                                 } @else {
                                   @for (key of weekKeys(); track key) {
                                     <td style="padding:3px 6px;border-bottom:1px solid #bbf7d0;border-right:1px solid #bbf7d0;text-align:right;color:#86efac;background:#f0fdf4;"></td>
                                   }
-                                  <td style="padding:3px 6px;border-bottom:1px solid #bbf7d0;border-right:1px solid #bbf7d0;text-align:right;color:#86efac;background:#f0fdf4;"></td>
+                                  @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #bbf7d0;border-right:1px solid #bbf7d0;text-align:right;color:#86efac;background:#f0fdf4;"></td>
+}
                                 }
                               }
                               @if (showTotal()) {
@@ -276,11 +298,13 @@ const MO_GROUPS = [
                                   </td>
                                 }
                                 @let eDif = getEsquejeDif(flor);
-                                <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                     [style.color]="eDif !== 0 ? (eDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                     [style.fontWeight]="eDif !== 0 ? '700' : '400'">
                                   {{ eDif !== 0 ? (eDif > 0 ? '+' : '') + fmtHcDiff(absVal(eDif)) : '' }}
                                 </td>
+}
                                 @if (showYearTotals()) {
                                   @for (yr of totYears(); track yr) {
                                     @let eYrV = getEsquejeYrTotal(yr, flor);
@@ -292,11 +316,13 @@ const MO_GROUPS = [
                                   }
                                   @if (totYears().length >= 2) {
                                     @let eTotDif = getEsquejeTotalDif(flor);
-                                    <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                    @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                         [style.color]="eTotDif !== 0 ? (eTotDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                         [style.fontWeight]="eTotDif !== 0 ? '700' : '400'">
                                       {{ eTotDif !== 0 ? (eTotDif > 0 ? '+' : '') + fmtHcDiff(absVal(eTotDif)) : '' }}
                                     </td>
+}
                                   }
                                 }
                               }
@@ -326,11 +352,13 @@ const MO_GROUPS = [
                               @let difCost = getRanchDif(rn, sc);
                               @let difDenom = getSiembraDif(rn, uc.key);
                               @let difCpt = difDenom !== 0 ? difCost / difDenom : 0;
-                              <td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
+                              @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
                                   [style.color]="difCpt !== 0 ? (difCpt > 0 ? '#16a34a' : '#dc2626') : '#fde68a'"
                                   [style.fontWeight]="difCpt !== 0 ? '700' : '400'">
                                 {{ difCpt !== 0 ? (difCpt > 0 ? '+' : '') + fmtFull(absVal(difCpt)) : '' }}
                               </td>
+}
                             }
                             @if (showTotal()) {
                               @for (key of weekKeys(); track key) {
@@ -346,11 +374,13 @@ const MO_GROUPS = [
                               @let ucDif = getWeekTotalDif(sc);
                               @let denomDif = getSiembraWeekTotal(weekKeys()[weekKeys().length - 1], uc.key) - getSiembraWeekTotal(weekKeys()[0], uc.key);
                               @let ucDifCpt = denomDif !== 0 ? ucDif / denomDif : 0;
-                              <td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
+                              @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
                                   [style.color]="ucDifCpt !== 0 ? (ucDifCpt > 0 ? '#16a34a' : '#dc2626') : '#fde68a'"
                                   [style.fontWeight]="ucDifCpt !== 0 ? '700' : '400'">
                                 {{ ucDifCpt !== 0 ? (ucDifCpt > 0 ? '+' : '') + fmtFull(absVal(ucDifCpt)) : '' }}
                               </td>
+}
                               @if (showYearTotals()) {
                                 @for (yr of totYears(); track yr) {
                                   @let yrCost = getTotalVal(yr, sc);
@@ -396,11 +426,13 @@ const MO_GROUPS = [
                                   </td>
                                 }
                                 @let dif = getSiembraDif(rn, m.key);
-                                <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
+                                @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
                                     [style.color]="dif !== 0 ? (dif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                     [style.fontWeight]="dif !== 0 ? '700' : '400'">
                                   {{ dif !== 0 ? (dif > 0 ? '+' : '') + fmtSiembra(absVal(dif), m.decimals) : '' }}
                                 </td>
+}
                               }
                               @if (showTotal()) {
                                 @for (key of weekKeys(); track key) {
@@ -412,11 +444,13 @@ const MO_GROUPS = [
                                   </td>
                                 }
                                 @let sDif = getSiembraWeekTotal(weekKeys()[weekKeys().length - 1], m.key) - getSiembraWeekTotal(weekKeys()[0], m.key);
-                                <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                     [style.color]="sDif !== 0 ? (sDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                     [style.fontWeight]="sDif !== 0 ? '700' : '400'">
                                   {{ sDif !== 0 ? (sDif > 0 ? '+' : '') + fmtSiembra(absVal(sDif), m.decimals) : '' }}
                                 </td>
+}
                                 @if (showYearTotals()) {
                                   @for (yr of totYears(); track yr) {
                                     @let sYrV = getSiembraYrTotal(yr, m.key);
@@ -428,11 +462,13 @@ const MO_GROUPS = [
                                   }
                                   @if (totYears().length >= 2) {
                                     @let sTotDif = getSiembraTotalDif(m.key);
-                                    <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                    @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                         [style.color]="sTotDif !== 0 ? (sTotDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                         [style.fontWeight]="sTotDif !== 0 ? '700' : '400'">
                                       {{ sTotDif !== 0 ? (sTotDif > 0 ? '+' : '') + fmtSiembra(absVal(sTotDif), m.decimals) : '' }}
                                     </td>
+}
                                   }
                                 }
                               }
@@ -457,11 +493,13 @@ const MO_GROUPS = [
                                 </td>
                               }
                               @let dif = getHorasTransporteDif(rn);
-                              <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
+                              @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
                                   [style.color]="dif !== 0 ? (dif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                   [style.fontWeight]="dif !== 0 ? '700' : '400'">
                                 {{ dif !== 0 ? (dif > 0 ? '+' : '') + absVal(dif).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2}) : '' }}
                               </td>
+}
                             }
                             @if (showTotal()) {
                               @for (key of weekKeys(); track key) {
@@ -473,11 +511,13 @@ const MO_GROUPS = [
                                 </td>
                               }
                               @let htDif = getHorasTransporteWeekTotal(weekKeys()[weekKeys().length - 1]) - getHorasTransporteWeekTotal(weekKeys()[0]);
-                              <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                              @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                   [style.color]="htDif !== 0 ? (htDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                   [style.fontWeight]="htDif !== 0 ? '700' : '400'">
                                 {{ htDif !== 0 ? (htDif > 0 ? '+' : '') + absVal(htDif).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2}) : '' }}
                               </td>
+}
                               @if (showYearTotals()) {
                                 @for (yr of totYears(); track yr) {
                                   @let htYrV = getHorasTransporteYrTotal(yr);
@@ -489,11 +529,13 @@ const MO_GROUPS = [
                                 }
                                 @if (totYears().length >= 2) {
                                   @let htTotDif = getHorasTransporteTotalDif();
-                                  <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                  @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                       [style.color]="htTotDif !== 0 ? (htTotDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                       [style.fontWeight]="htTotDif !== 0 ? '700' : '400'">
                                     {{ htTotDif !== 0 ? (htTotDif > 0 ? '+' : '') + absVal(htTotDif).toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2}) : '' }}
                                   </td>
+}
                                 }
                               }
                             }
@@ -520,11 +562,13 @@ const MO_GROUPS = [
                                 }
                                 @let cDif = getTractorDif(rn, act, 'camas');
                                 @let hDif = getTractorDif(rn, act, 'horas');
-                                <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
+                                @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#f0fdf4;"
                                     [style.color]="cDif !== 0 || hDif !== 0 ? (cDif > 0 || hDif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                     [style.fontWeight]="cDif !== 0 || hDif !== 0 ? '700' : '400'">
                                   {{ formatTractorDif(cDif, hDif) }}
                                 </td>
+}
                               }
                               @if (showTotal()) {
                                 @for (key of weekKeys(); track key) {
@@ -538,11 +582,13 @@ const MO_GROUPS = [
                                 }
                                 @let tCdif = getTractorCamasWeekTotal(weekKeys()[weekKeys().length - 1], act) - getTractorCamasWeekTotal(weekKeys()[0], act);
                                 @let tHdif = getTractorHorasWeekTotal(weekKeys()[weekKeys().length - 1], act) - getTractorHorasWeekTotal(weekKeys()[0], act);
-                                <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                     [style.color]="tCdif !== 0 || tHdif !== 0 ? (tCdif > 0 || tHdif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                     [style.fontWeight]="tCdif !== 0 || tHdif !== 0 ? '700' : '400'">
                                   {{ formatTractorDif(tCdif, tHdif) }}
                                 </td>
+}
                                 @if (showYearTotals()) {
                                   @for (yr of totYears(); track yr) {
                                     @let tYrC = getTractorYrTotal(yr, act, 'camas');
@@ -556,11 +602,13 @@ const MO_GROUPS = [
                                   @if (totYears().length >= 2) {
                                     @let tTotCdif = getTractorTotalDif(act, 'camas');
                                     @let tTotHdif = getTractorTotalDif(act, 'horas');
-                                    <td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
+                                    @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #dcfce7;border-right:1px solid #dcfce7;text-align:right;background:#bbf7d0;"
                                         [style.color]="tTotCdif !== 0 || tTotHdif !== 0 ? (tTotCdif > 0 || tTotHdif > 0 ? '#16a34a' : '#dc2626') : '#86efac'"
                                         [style.fontWeight]="tTotCdif !== 0 || tTotHdif !== 0 ? '700' : '400'">
                                       {{ formatTractorDif(tTotCdif, tTotHdif) }}
                                     </td>
+}
                                   }
                                 }
                               }
@@ -578,13 +626,17 @@ const MO_GROUPS = [
                           @for (key of weekKeys(); track key) {
                             <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
                           }
-                          <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
+                          @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
+}
                         }
                         @if (showTotal()) {
                           @for (key of weekKeys(); track key) {
                             <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
                           }
-                          <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
+                          @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
+}
                           @if (showYearTotals()) {
                             @for (yr of totYears(); track yr) {
                               <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
@@ -609,11 +661,13 @@ const MO_GROUPS = [
                                 {{ getRanchVal(key, rn, sc) > 0 ? fmt(getRanchVal(key, rn, sc)) : '' }}
                               </td>
                             }
-                            <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                            @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                                 [style.color]="getRanchDif(rn, sc) !== 0 ? (getRanchDif(rn, sc) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                                 [style.fontWeight]="getRanchDif(rn, sc) !== 0 ? '700' : '400'">
                               {{ getRanchDif(rn, sc) !== 0 ? (getRanchDif(rn, sc) > 0 ? '+' : '') + fmt(absVal(getRanchDif(rn, sc))) : '' }}
                             </td>
+}
                           }                      @if (showTotal()) {
                         @for (key of weekKeys(); track key) {
                           <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
@@ -623,11 +677,13 @@ const MO_GROUPS = [
                           </td>
                         }
                         @let wkDif = getWeekTotalDif(sc);
-                        <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                        @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                             [style.color]="wkDif !== 0 ? (wkDif > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                             [style.fontWeight]="wkDif !== 0 ? '700' : '400'">
                           {{ wkDif !== 0 ? (wkDif > 0 ? '+' : '') + fmt(absVal(wkDif)) : '' }}
                         </td>
+}
                         @for (yr of totYears(); track yr) {
                           <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                               [style.color]="getTotalVal(yr, sc) > 0 ? '#5a1414' : '#ccc'"
@@ -636,11 +692,13 @@ const MO_GROUPS = [
                           </td>
                         }
                         @if (totYears().length >= 2) {
-                          <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                          @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                               [style.color]="getTotalDif(sc) !== 0 ? (getTotalDif(sc) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                               [style.fontWeight]="getTotalDif(sc) !== 0 ? '700' : '400'">
                             {{ getTotalDif(sc) !== 0 ? (getTotalDif(sc) > 0 ? '+' : '') + fmt(absVal(getTotalDif(sc))) : '' }}
                           </td>
+}
                         }
                       }
                         </tr>
@@ -664,10 +722,12 @@ const MO_GROUPS = [
                           {{ getRanchVal(key, rn, sc) > 0 ? fmt(getRanchVal(key, rn, sc)) : '' }}
                         </td>
                       }
-                      <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                      @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                           [style.color]="getRanchDif(rn, sc) !== 0 ? (getRanchDif(rn, sc) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                           [style.fontWeight]="getRanchDif(rn, sc) !== 0 ? '700' : '400'">                            {{ getRanchDif(rn, sc) !== 0 ? (getRanchDif(rn, sc) > 0 ? '+' : '') + fmt(absVal(getRanchDif(rn, sc))) : '' }}
                       </td>
+}
                     }
                     @if (showTotal()) {
                       @for (key of weekKeys(); track key) {
@@ -678,11 +738,13 @@ const MO_GROUPS = [
                         </td>
                       }
                       @let wkDif = getWeekTotalDif(sc);
-                      <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                      @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                           [style.color]="wkDif !== 0 ? (wkDif > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                           [style.fontWeight]="wkDif !== 0 ? '700' : '400'">
                         {{ wkDif !== 0 ? (wkDif > 0 ? '+' : '') + fmt(absVal(wkDif)) : '' }}
                       </td>
+}
                       @if (showYearTotals()) {
                         @for (yr of totYears(); track yr) {
                           <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
@@ -692,11 +754,13 @@ const MO_GROUPS = [
                           </td>
                         }
                         @if (totYears().length >= 2) {
-                          <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
+                          @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;"
                               [style.color]="getTotalDif(sc) !== 0 ? (getTotalDif(sc) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                               [style.fontWeight]="getTotalDif(sc) !== 0 ? '700' : '400'">
                             {{ getTotalDif(sc) !== 0 ? (getTotalDif(sc) > 0 ? '+' : '') + fmt(absVal(getTotalDif(sc))) : '' }}
                           </td>
+}
                         }
                       }
                     }
@@ -717,11 +781,13 @@ const MO_GROUPS = [
                       {{ getGrandRanchVal(key, rn) > 0 ? fmt(getGrandRanchVal(key, rn)) : '' }}
                     </td>
                   }
-                  <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;background:var(--pt-tot-bg);"
+                  @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;background:var(--pt-tot-bg);"
                       [style.color]="getGrandRanchDif(rn) !== 0 ? (getGrandRanchDif(rn) > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                       [style.fontWeight]="getGrandRanchDif(rn) !== 0 ? '700' : '400'">
                     {{ getGrandRanchDif(rn) !== 0 ? (getGrandRanchDif(rn) > 0 ? '+' : '') + fmt(absVal(getGrandRanchDif(rn))) : '' }}
                   </td>
+}
                 }
                 @if (showTotal()) {
                   @for (key of weekKeys(); track key) {
@@ -732,11 +798,13 @@ const MO_GROUPS = [
                     </td>
                   }
                   @let grandWkDif = getGrandWeekDif();
+                  @if (showWeekDif()) {
                   <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;background:var(--pt-tot-bg);"
                       [style.color]="grandWkDif !== 0 ? (grandWkDif > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                       [style.fontWeight]="grandWkDif !== 0 ? '700' : '400'">
                     {{ grandWkDif !== 0 ? (grandWkDif > 0 ? '+' : '') + fmt(absVal(grandWkDif)) : '' }}
                   </td>
+                  }
                   @if (showYearTotals()) {
                     @for (yr of totYears(); track yr) {
                       <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;background:var(--pt-tot-bg);"
@@ -746,11 +814,13 @@ const MO_GROUPS = [
                       </td>
                     }
                     @if (totYears().length >= 2) {
-                      <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;background:var(--pt-tot-bg);"
+                      @if (showWeekDif()) {
+<td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;background:var(--pt-tot-bg);"
                           [style.color]="getGrandTotalDif() !== 0 ? (getGrandTotalDif() > 0 ? '#16a34a' : '#dc2626') : '#ccc'"
                           [style.fontWeight]="getGrandTotalDif() !== 0 ? '700' : '400'">
                         {{ getGrandTotalDif() !== 0 ? (getGrandTotalDif() > 0 ? '+' : '') + fmt(absVal(getGrandTotalDif())) : '' }}
                       </td>
+}
                     }
                   }
                 }
@@ -1007,7 +1077,8 @@ export class ServiciosViewComponent {
   });
 
   // ── Column counts ──
-  protected nColsPerRanch = computed(() => Math.max(this.weekKeys().length, 0) + 1);
+  protected showWeekDif = computed(() => this.weekKeys().length > 1);
+  protected nColsPerRanch = computed(() => Math.max(this.weekKeys().length, 0) + (this.showWeekDif() ? 1 : 0));
   protected nTotalCols = computed(() => {
     const yrs = this.totYears();
     return this.nColsPerRanch() + (this.showYearTotals() ? yrs.length + (yrs.length >= 2 ? 1 : 0) : 0);

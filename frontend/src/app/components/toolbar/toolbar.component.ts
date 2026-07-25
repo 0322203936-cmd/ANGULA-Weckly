@@ -8,76 +8,135 @@ import { YEAR_COLORS, CurrencyType } from '../../models/types';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="toolbar">
-      <span class="tb-label">Cat</span>
-      <select class="tb-sel" style="max-width:200px" 
-              [style.color]="hasData(state().cat) ? '#262626' : '#dc2626'"
-              [style.fontWeight]="hasData(state().cat) ? '600' : '700'"
-              [value]="state().cat" (change)="onCatChange($event)">
-        <option *ngFor="let c of categories()" [value]="c"
-                [style.color]="hasData(c) ? '#222' : '#dc2626'"
-                [style.fontWeight]="hasData(c) ? '400' : '700'">
-          {{ c }}{{ hasData(c) ? '' : ' 🚫' }}
-        </option>
-      </select>
-      <div class="tb-sep"></div>
-
-      <span class="tb-label">Rancho</span>
-      <button class="tb-btn" id="ranchDropdownBtn"
-        style="min-width:90px;max-width:180px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
-        (click)="toggleRanchDropdown($event)">{{ ranchLabel() }}</button>
-      @if (ranchOpen()) {
-        <div id="ranchDropdownPanel" [style.top.px]="ranchPos().top" [style.left.px]="ranchPos().left"
-          style="display:block;position:fixed;z-index:9999;background:#fff;border:1px solid #bbb;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,0.15);min-width:150px;max-height:220px;overflow-y:auto;padding:4px 0;">
-          <label *ngFor="let r of allRanches(); track r"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;cursor:pointer;font-size:11px;white-space:nowrap;"
-            [style.borderTop]="r === ranchOrder()[0] ? '1px solid #eee;margin-top:2px;padding-top:4px;' : ''">
-            <input type="checkbox" [value]="r" [checked]="isRanchSelected(r)" (change)="toggleRanch(r, $event)" style="margin:0;cursor:pointer;">{{ r }}
-          </label>
-        </div>
-      }
-
-      <div class="tb-sep"></div>
-
-      <div class="tb-grp">
-        <button class="tb-btn" id="btnUSD" [class.active]="state().currency==='usd'" (click)="setCurrency('usd')">USD</button>
-        <button class="tb-btn" id="btnMXN" [class.active]="state().currency==='mxn'" (click)="setCurrency('mxn')">MXN</button>
+    <div class="bg-white shadow-sm px-2 py-1 d-flex flex-wrap align-items-center gap-2" style="min-height: 48px; border-bottom: 3px solid #800020;">
+      
+      <!-- Category -->
+      <div class="d-flex align-items-center gap-1">
+        <span class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;" title="Categoría"><i class="fa-solid fa-tags me-1"></i>Cat</span>
+        <select class="form-select form-select-sm shadow-sm rounded-pill border-0" 
+                style="background-color: #f8f9fa; max-width:180px; font-size: 0.75rem; padding-top: 2px; padding-bottom: 2px;" 
+                [style.color]="hasData(state().cat) ? '#262626' : '#dc2626'"
+                [style.fontWeight]="hasData(state().cat) ? '600' : '700'"
+                [value]="state().cat" (change)="onCatChange($event)">
+          <option *ngFor="let c of categories()" [value]="c"
+                  [style.color]="hasData(c) ? '#222' : '#dc2626'"
+                  [style.fontWeight]="hasData(c) ? '400' : '700'">
+            {{ c }}{{ hasData(c) ? '' : ' 🚫' }}
+          </option>
+        </select>
       </div>
 
-      <div class="tb-sep"></div>
+      <div class="vr opacity-25 d-none d-md-block" style="height: 20px; align-self: center;"></div>
 
-      <span class="tb-label">Desde</span>
-      <span class="range-val">{{ state().fromWeek | number:'2.0-0' }}</span>
-      <input type="range" class="tb-slider" [min]="minWeek()" [max]="maxWeek()" [value]="state().fromWeek" (input)="onFromChange($event)">
-      <span class="tb-label">Hasta</span>
-      <span class="range-val">{{ state().toWeek | number:'2.0-0' }}</span>
-      <input type="range" class="tb-slider" [min]="minWeek()" [max]="maxWeek()" [value]="state().toWeek" (input)="onToChange($event)">
-      <span class="range-badge">{{ state().fromWeek | number:'2.0-0' }}  {{ state().toWeek | number:'2.0-0' }} ({{ weekCount() }} sem)</span>
+      <!-- Ranch -->
+      <div class="d-flex align-items-center gap-1 position-relative">
+        <span class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;" title="Rancho"><i class="fa-solid fa-tractor me-1"></i>Ranch</span>
+        <button class="btn btn-sm btn-light shadow-sm rounded-pill border-0 fw-semibold text-start d-flex justify-content-between align-items-center py-1" id="ranchDropdownBtn"
+          style="min-width:100px; max-width:150px; font-size: 0.75rem;"
+          (click)="toggleRanchDropdown($event)">
+          <span class="text-truncate me-1">{{ ranchLabel() }}</span>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size: 0.6rem;"></i>
+        </button>
+        @if (ranchOpen()) {
+          <div id="ranchDropdownPanel" class="shadow-lg rounded-3 border-0 bg-white py-1" [style.top.px]="ranchPos().top" [style.left.px]="ranchPos().left"
+            style="display:block; position:fixed; z-index:9999; min-width:140px; max-height:240px; overflow-y:auto;">
+            <label *ngFor="let r of allRanches(); track r"
+              class="dropdown-item d-flex align-items-center gap-2 px-3 py-1 text-dark fw-medium"
+              style="font-size:0.75rem; cursor:pointer;"
+              [style.borderTop]="r === ranchOrder()[0] ? '1px solid #f1f5f9; margin-top:2px; padding-top:4px;' : ''">
+              <input type="checkbox" class="form-check-input mt-0" style="transform: scale(0.85);" [value]="r" [checked]="isRanchSelected(r)" (change)="toggleRanch(r, $event)">
+              {{ r }}
+            </label>
+          </div>
+        }
+      </div>
 
-      <div class="tb-sep"></div>
+      <div class="vr opacity-25 d-none d-md-block" style="height: 20px; align-self: center;"></div>
 
-      <span class="tb-label">Años</span>
-      @for (y of dataYears(); track y) {
-        <button class="yr-chip" [class.on]="isYearActive(y)"
-          [style.color]="YEAR_COLORS[y]||'#888'"
-          [style.borderColor]="isYearActive(y)?(YEAR_COLORS[y]||'#888'):'transparent'"
-          [style.background]="isYearActive(y)?(YEAR_COLORS[y]+'20'):'transparent'"
-          (click)="toggleYear(y)">{{ y }}</button>
-      }
+      <!-- Currency Toggle -->
+      <div class="btn-group shadow-sm rounded-pill" role="group">
+        <button type="button" class="btn btn-sm" style="font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 50px 0 0 50px;" [ngClass]="state().currency==='usd' ? 'btn-dark' : 'btn-light text-muted border'" (click)="setCurrency('usd')">USD</button>
+        <button type="button" class="btn btn-sm" style="font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 0 50px 50px 0;" [ngClass]="state().currency==='mxn' ? 'btn-dark' : 'btn-light text-muted border'" (click)="setCurrency('mxn')">MXN</button>
+      </div>
 
-      @if (!isServiciosCat()) {
-        <div class="tb-sep"></div>
-        <button class="tb-btn" style="color:#16a34a;border-color:#16a34a;" (click)="verProductos.emit()">VER PRODUCTOS</button>
-      }
+      <div class="vr opacity-25 d-none d-md-block" style="height: 20px; align-self: center;"></div>
 
-      <div class="tb-sep"></div>
-      
-      <!-- Reload Button using Bootstrap & FontAwesome -->
-      <button class="btn btn-sm d-flex align-items-center gap-2 ms-auto" style="background-color: #800020; color: white; border: none; font-size: 0.75rem; padding: 4px 8px;" (click)="reload.emit()" title="Recargar datos nuevos">
-        <i class="fa-solid fa-rotate-right"></i>
-        <span>Recargar</span>
-      </button>
+      <!-- Range Sliders -->
+      <div class="d-flex align-items-center gap-1">
+        <span class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;"><i class="fa-regular fa-calendar me-1"></i>Del</span>
+        <span class="badge bg-light text-dark shadow-sm border fw-bold" style="font-size: 0.7rem; padding: 4px 6px;">{{ state().fromWeek | number:'2.0-0' }}</span>
+        <input type="range" class="form-range mx-1" style="width: 60px; height: 1.2rem;" [min]="minWeek()" [max]="maxWeek()" [value]="state().fromWeek" (input)="onFromChange($event)">
+        
+        <span class="text-muted fw-bold ms-1" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;">Al</span>
+        <span class="badge bg-light text-dark shadow-sm border fw-bold" style="font-size: 0.7rem; padding: 4px 6px;">{{ state().toWeek | number:'2.0-0' }}</span>
+        <input type="range" class="form-range mx-1" style="width: 60px; height: 1.2rem;" [min]="minWeek()" [max]="maxWeek()" [value]="state().toWeek" (input)="onToChange($event)">
+        
+        <span class="badge rounded-pill fw-bold shadow-sm" style="background-color: #fee2e2; color: #991b1b; font-size: 0.65rem; padding: 4px 8px;">
+          ({{ weekCount() }} sem)
+        </span>
+      </div>
+
+      <div class="vr opacity-25 d-none d-lg-block" style="height: 20px; align-self: center;"></div>
+
+      <!-- Years -->
+      <div class="d-flex align-items-center gap-1">
+        <span class="text-muted" style="font-size: 0.85rem;" title="Años"><i class="fa-solid fa-clock-rotate-left"></i></span>
+        <div class="d-flex flex-wrap gap-2 px-1">
+          @for (y of dataYears(); track y) {
+            <button class="btn btn-sm rounded-pill fw-bold" 
+              [class.shadow-sm]="isYearActive(y)"
+              style="font-size: 0.65rem; padding: 2px 8px; transition: all 0.2s;"
+              [style.color]="YEAR_COLORS[y]||'#888'"
+              [style.backgroundColor]="isYearActive(y) ? (YEAR_COLORS[y]+'20') : 'transparent'"
+              [style.border]="isYearActive(y) ? ('1px solid ' + YEAR_COLORS[y]) : '1px solid transparent'"
+              (click)="toggleYear(y)">{{ y }}</button>
+          }
+        </div>
+      </div>
+
+      <div class="ms-auto d-flex align-items-center gap-2">
+        @if (!isServiciosCat()) {
+          <button class="btn btn-sm btn-outline-success d-flex align-items-center gap-2 fw-semibold" style="font-size: 0.75rem; padding: 4px 8px;" (click)="verProductos.emit()" title="Ver rangos de productos">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Rangos de productos</span>
+          </button>
+        }
+
+        <!-- Reload Button using Bootstrap & FontAwesome -->
+        <button class="btn btn-sm d-flex align-items-center gap-2 text-white fw-semibold" style="background-color: #800020; border: none; font-size: 0.75rem; padding: 4px 8px;" (click)="openReloadModal()" title="Recargar datos completos">
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+          <span>Recargar</span>
+        </button>
+      </div>
     </div>
+
+    <!-- Password Modal for Reload -->
+    @if (showPasswordModal()) {
+      <div class="modal-backdrop fade show" style="z-index: 9998; background: rgba(0,0,0,0.5); position: fixed; inset: 0;"></div>
+      <div class="modal fade show" style="display: block; z-index: 9999; position: fixed; top: 0; left: 0; width: 100%; height: 100%;" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content shadow-lg border-0 rounded-3">
+            <div class="modal-header bg-light border-bottom-0">
+              <h5 class="modal-title fw-bold text-dark" style="font-size: 1.1rem;"><i class="fa-solid fa-lock text-danger me-2"></i> Autenticación Requerida</h5>
+              <button type="button" class="btn-close" (click)="showPasswordModal.set(false)"></button>
+            </div>
+            <div class="modal-body p-4">
+              <p class="text-muted mb-3" style="font-size: 0.9rem;">La recarga completa de datos desde la base de datos requiere autorización. Ingresa la contraseña maestra.</p>
+              <input type="password" class="form-control form-control-lg" placeholder="Contraseña..." [value]="passwordInput()" (input)="onPasswordInput($event)" (keyup.enter)="confirmReload()">
+              @if (passwordError()) {
+                <div class="text-danger mt-2 small fw-semibold"><i class="fa-solid fa-circle-exclamation"></i> Contraseña incorrecta. Intenta nuevamente.</div>
+              }
+            </div>
+            <div class="modal-footer border-top-0">
+              <button type="button" class="btn btn-light" (click)="showPasswordModal.set(false)">Cancelar</button>
+              <button type="button" class="btn btn-danger px-4" style="background-color: #800020;" (click)="confirmReload()">
+                <i class="fa-solid fa-cloud-arrow-down me-1"></i> Autorizar Recarga
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
   `,
 })
 export class ToolbarComponent {
@@ -87,6 +146,31 @@ export class ToolbarComponent {
 
   protected ranchOpen = signal(false);
   protected ranchPos = signal({ top: 0, left: 0 });
+
+  // Password Modal Signals
+  protected showPasswordModal = signal(false);
+  protected passwordInput = signal('');
+  protected passwordError = signal(false);
+
+  openReloadModal() {
+    this.passwordInput.set('');
+    this.passwordError.set(false);
+    this.showPasswordModal.set(true);
+  }
+
+  onPasswordInput(event: Event) {
+    const val = (event.target as HTMLInputElement).value;
+    this.passwordInput.set(val);
+  }
+
+  confirmReload() {
+    if (this.passwordInput() === 'cfbc2026') {
+      this.showPasswordModal.set(false);
+      this.reload.emit();
+    } else {
+      this.passwordError.set(true);
+    }
+  }
 
   constructor(protected stateService: StateService) {}
 

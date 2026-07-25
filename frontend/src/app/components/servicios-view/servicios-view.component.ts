@@ -48,7 +48,7 @@ const MO_GROUPS = [
   { label: 'PROD. PÁTINA Y REC', subcats: ['Prod. Patina y rec'] },
   { label: 'IMSS/INFO/RCV',      subcats: ['IMSS,INFO Y RCV'] },
   { label: 'IMP. 1.8%',          subcats: ['Imp. 1.8%'] },
-];
+]; // Force HMR
 
 @Component({
   selector: 'app-servicios-view',
@@ -130,10 +130,10 @@ const MO_GROUPS = [
                     @if (group.subcats.length === 1) {
                       <!-- Single subcat: show directly in group row (no duplicate) - click to expand metrics -->
                       @let sc = group.subcats[0];
-                      <tr class="pt-row-group" style="cursor:pointer;" (click)="toggleGroup(group.label)"
-                          [style.background]="isGroupExpanded(group.label) ? '#e8e8e8' : 'var(--pt-grp-bg)'"
+                      <tr class="pt-row" style="cursor:pointer;" (click)="toggleGroup(group.label)"
+                          [style.background]="isGroupExpanded(group.label) ? '#e8e8e8' : '#ffffff'"
                           title="Clic para expandir/contraer métricas">
-                        <td style="padding:3px 8px;position:sticky;left:0;z-index:1;background:inherit;border-bottom:1px solid #e5e5e5;border-right:1px solid #ddd;font-weight:700;color:var(--pt-grp-fg);font-size:11px;">
+                        <td style="padding:3px 8px;position:sticky;left:0;z-index:1;background:inherit !important;border-bottom:1px solid #e5e5e5;border-right:1px solid #ddd;font-weight:700;color:var(--pt-grp-fg);font-size:11px;">
                           <span>{{ isGroupExpanded(group.label) ? '− ' : '+ ' }}</span>{{ group.label }}
                         </td>
                         @for (rn of activeRanchesInData(); track rn) {
@@ -630,13 +630,13 @@ const MO_GROUPS = [
                       }
                     } @else {
                       <!-- Multiple subcats: show group header + subcat rows -->
-                      <tr class="pt-row-group">
-                        <td style="padding:3px 8px;position:sticky;left:0;z-index:1;background:var(--pt-grp-bg);border-bottom:1px solid #e5e5e5;border-right:1px solid #ddd;font-weight:700;color:var(--pt-grp-fg);font-size:11px;">
+                      <tr class="pt-row" style="background:#ffffff;">
+                        <td style="padding:3px 8px;position:sticky;left:0;z-index:1;background:inherit !important;border-bottom:1px solid #e5e5e5;border-right:1px solid #ddd;font-weight:700;color:var(--pt-grp-fg);font-size:11px;">
                           {{ group.label }}
                         </td>
                         @for (rn of activeRanchesInData(); track rn) {
                           @for (key of weekKeys(); track key) {
-                            <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>
+                            <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;background:#ffffff;"></td>
                           }
                           @if (showWeekDif()) {
 <td style="padding:3px 6px;border-bottom:1px solid #e5e5e5;border-right:1px solid #e5e5e5;text-align:right;color:#ccc;"></td>

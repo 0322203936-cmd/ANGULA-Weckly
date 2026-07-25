@@ -140,6 +140,16 @@ export class MainDashboardComponent implements OnInit {
       const currentCat = this.stateService.state().cat;
       if (currentCat !== lastCat) {
         this.activePanels.set([]);
+        
+        // Switch to 'comparativo' only if it's a real user change (not the initial data load)
+        if (lastCat !== '') {
+          if (!this.stateService.isServiciosCat()) {
+            this.stateService.setView('comparativo');
+          } else {
+            this.stateService.setView('servicios');
+          }
+        }
+        
         lastCat = currentCat;
       }
     }, { allowSignalWrites: true });

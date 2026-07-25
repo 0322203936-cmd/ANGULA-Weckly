@@ -349,16 +349,20 @@ const MO_GROUPS = [
                                   {{ cpt > 0 ? fmtFull(cpt) : '' }}
                                 </td>
                               }
-                              @let difCost = getRanchDif(rn, sc);
-                              @let difDenom = getSiembraDif(rn, uc.key);
-                              @let difCpt = difDenom !== 0 ? difCost / difDenom : 0;
+                              @let cCost = getRanchVal(weekKeys()[weekKeys().length - 1], rn, sc);
+                              @let cDenom = getSiembraVal(weekKeys()[weekKeys().length - 1], rn, uc.key);
+                              @let cCpt = cDenom > 0 ? cCost / cDenom : 0;
+                              @let pCost = getRanchVal(weekKeys()[0], rn, sc);
+                              @let pDenom = getSiembraVal(weekKeys()[0], rn, uc.key);
+                              @let pCpt = pDenom > 0 ? pCost / pDenom : 0;
+                              @let difCpt = cCpt - pCpt;
                               @if (showWeekDif()) {
-<td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
-                                  [style.color]="difCpt !== 0 ? (difCpt > 0 ? '#16a34a' : '#dc2626') : '#fde68a'"
-                                  [style.fontWeight]="difCpt !== 0 ? '700' : '400'">
-                                {{ difCpt !== 0 ? (difCpt > 0 ? '+' : '') + fmtFull(absVal(difCpt)) : '' }}
-                              </td>
-}
+                                <td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;">
+                                  <span [class]="difCpt > 0 ? 'badge-dif badge-pos' : (difCpt < 0 ? 'badge-dif badge-neg' : '')">
+                                    {{ difCpt !== 0 ? (difCpt > 0 ? '+' : '') + fmtFull(absVal(difCpt)) : '' }}
+                                  </span>
+                                </td>
+                              }
                             }
                             @if (showTotal()) {
                               @for (key of weekKeys(); track key) {
@@ -371,16 +375,20 @@ const MO_GROUPS = [
                                   {{ wkCpt > 0 ? fmtFull(wkCpt) : '' }}
                                 </td>
                               }
-                              @let ucDif = getWeekTotalDif(sc);
-                              @let denomDif = getSiembraWeekTotal(weekKeys()[weekKeys().length - 1], uc.key) - getSiembraWeekTotal(weekKeys()[0], uc.key);
-                              @let ucDifCpt = denomDif !== 0 ? ucDif / denomDif : 0;
+                              @let cWkCost = getWeekTotalVal(weekKeys()[weekKeys().length - 1], sc);
+                              @let cWkDenom = getSiembraWeekTotal(weekKeys()[weekKeys().length - 1], uc.key);
+                              @let cWkCpt = cWkDenom > 0 ? cWkCost / cWkDenom : 0;
+                              @let pWkCost = getWeekTotalVal(weekKeys()[0], sc);
+                              @let pWkDenom = getSiembraWeekTotal(weekKeys()[0], uc.key);
+                              @let pWkCpt = pWkDenom > 0 ? pWkCost / pWkDenom : 0;
+                              @let ucDifCpt = cWkCpt - pWkCpt;
                               @if (showWeekDif()) {
-<td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
-                                  [style.color]="ucDifCpt !== 0 ? (ucDifCpt > 0 ? '#16a34a' : '#dc2626') : '#fde68a'"
-                                  [style.fontWeight]="ucDifCpt !== 0 ? '700' : '400'">
-                                {{ ucDifCpt !== 0 ? (ucDifCpt > 0 ? '+' : '') + fmtFull(absVal(ucDifCpt)) : '' }}
-                              </td>
-}
+                                <td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;">
+                                  <span [class]="ucDifCpt > 0 ? 'badge-dif badge-pos' : (ucDifCpt < 0 ? 'badge-dif badge-neg' : '')">
+                                    {{ ucDifCpt !== 0 ? (ucDifCpt > 0 ? '+' : '') + fmtFull(absVal(ucDifCpt)) : '' }}
+                                  </span>
+                                </td>
+                              }
                               @if (showYearTotals()) {
                                 @for (yr of totYears(); track yr) {
                                   @let yrCost = getTotalVal(yr, sc);
@@ -393,13 +401,17 @@ const MO_GROUPS = [
                                   </td>
                                 }
                                 @if (totYears().length >= 2) {
-                                  @let totDifCost = getTotalDif(sc);
-                                  @let totDifDenom = getSiembraTotalDif(uc.key);
-                                  @let totDifCpt = totDifDenom !== 0 ? totDifCost / totDifDenom : 0;
-                                  <td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;"
-                                      [style.color]="totDifCpt !== 0 ? (totDifCpt > 0 ? '#16a34a' : '#dc2626') : '#fde68a'"
-                                      [style.fontWeight]="totDifCpt !== 0 ? '700' : '400'">
-                                    {{ totDifCpt !== 0 ? (totDifCpt > 0 ? '+' : '') + fmtFull(absVal(totDifCpt)) : '' }}
+                                  @let cYrCost = getTotalVal(totYears()[totYears().length - 1], sc);
+                                  @let cYrDenom = getSiembraYrTotal(totYears()[totYears().length - 1], uc.key);
+                                  @let cYrCpt = cYrDenom > 0 ? cYrCost / cYrDenom : 0;
+                                  @let pYrCost = getTotalVal(totYears()[0], sc);
+                                  @let pYrDenom = getSiembraYrTotal(totYears()[0], uc.key);
+                                  @let pYrCpt = pYrDenom > 0 ? pYrCost / pYrDenom : 0;
+                                  @let totDifCpt = cYrCpt - pYrCpt;
+                                  <td style="padding:3px 6px;border-bottom:1px solid #fde68a;border-right:1px solid #fde68a;text-align:right;background:#fffbeb;">
+                                    <span [class]="totDifCpt > 0 ? 'badge-dif badge-pos' : (totDifCpt < 0 ? 'badge-dif badge-neg' : '')">
+                                      {{ totDifCpt !== 0 ? (totDifCpt > 0 ? '+' : '') + fmtFull(absVal(totDifCpt)) : '' }}
+                                    </span>
                                   </td>
                                 }
                               }

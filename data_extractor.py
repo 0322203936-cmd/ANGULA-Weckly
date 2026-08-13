@@ -1943,7 +1943,7 @@ def _extraer_detalle_weekly() -> dict:
     def _procesar_xls(xls, label: str) -> None:
         """Procesa todas las hojas WEEKLY#### de un ExcelFile y acumula en result."""
         for sheet in xls.sheet_names:
-            m = re.match(r"WEEKLY(\d{4})", sheet.strip().upper())
+            m = re.match(r"^(?:WEEKLY|WK)\s*(\d{4})$", sheet.strip().upper())
             if not m:
                 continue
             wk_code = int(m.group(1))

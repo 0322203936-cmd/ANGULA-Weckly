@@ -1482,7 +1482,7 @@ export class ServiciosViewComponent {
     if (!n || isNaN(n)) return '';
     const neg = n < 0;
     const s = Math.abs(n);
-    return (neg ? '-$' : '$') + s.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return (neg ? '-$' : '$') + s.toLocaleString('en-US', { minimumFractionDigits: 5, maximumFractionDigits: 5 });
   }
 
   protected fmtSiembra(n: number, decimals: number): string {

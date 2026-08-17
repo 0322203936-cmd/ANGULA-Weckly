@@ -13,14 +13,15 @@ import { YEAR_COLORS } from '../../models/types';
         <table class="cmp-tbl">
           <thead>
             <tr>
-              <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 border border-[#262626] text-left sticky left-0 z-10"
+              <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 text-left sticky left-0 z-10"
                   style="min-width:70px;">Semana</th>
-              <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 border border-[#262626] text-right"
+              <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 text-right"
                   style="min-width:100px;">Total {{ sym() }}</th>
-              <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 border border-[#262626] text-right"
+              <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 text-right"
                   style="min-width:80px;">&#916; vs ant.</th>
               @for (r of activeRanches(); track r) {
-                <th style="min-width:90px;">{{ r }}</th>
+                <th class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 text-right"
+                    style="min-width:90px;">{{ r }}</th>
               }
             </tr>
           </thead>
@@ -144,3 +145,4 @@ export class ComparativoViewComponent {
     this.cellClick.emit({yr, wk, ranch, cat: this.state().cat});
   }
 }
+

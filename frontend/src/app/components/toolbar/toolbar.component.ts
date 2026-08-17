@@ -8,40 +8,38 @@ import { YEAR_COLORS, CurrencyType } from '../../models/types';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="bg-white shadow-sm px-2 py-1 d-flex flex-wrap align-items-center gap-2" style="min-height: 48px; border-bottom: 3px solid #800020;">
+    <div class="bg-white px-3 py-1 d-flex flex-wrap align-items-center gap-3" style="min-height: 42px; border-bottom: 1px solid #e5e5e5; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
       
       <!-- Category -->
       <div class="d-flex align-items-center gap-1">
-        <span class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;" title="Categoría"><i class="fa-solid fa-tags me-1"></i>Cat</span>
-        <select class="form-select form-select-sm shadow-sm rounded-pill border-0" 
-                style="background-color: #f8f9fa; max-width:180px; font-size: 0.75rem; padding-top: 2px; padding-bottom: 2px;" 
-                [style.color]="hasData(state().cat) ? '#262626' : '#dc2626'"
-                [style.fontWeight]="hasData(state().cat) ? '600' : '700'"
+        <span class="text-secondary fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;" title="Categoría">CAT</span>
+        <select class="form-select form-select-sm border border-light" 
+                style="background-color: #f8f9fa; min-width:180px; font-size: 0.7rem; padding: 2px 24px 2px 8px; border-radius: 4px; font-weight: 600;" 
+                [style.color]="hasData(state().cat) ? '#1f2937' : '#dc2626'"
                 [value]="state().cat" (change)="onCatChange($event)">
           <option *ngFor="let c of categories()" [value]="c"
-                  [style.color]="hasData(c) ? '#222' : '#dc2626'"
-                  [style.fontWeight]="hasData(c) ? '400' : '700'">
+                  [style.color]="hasData(c) ? '#1f2937' : '#dc2626'">
             {{ c }}{{ hasData(c) ? '' : ' 🚫' }}
           </option>
         </select>
       </div>
 
-      <div class="vr opacity-25 d-none d-md-block" style="height: 20px; align-self: center;"></div>
+      <div class="vr bg-secondary opacity-25 d-none d-md-block" style="height: 16px; align-self: center;"></div>
 
       <!-- Ranch -->
       <div class="d-flex align-items-center gap-1 position-relative">
-        <span class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;" title="Rancho"><i class="fa-solid fa-tractor me-1"></i>Ranch</span>
-        <button class="btn btn-sm btn-light shadow-sm rounded-pill border-0 fw-semibold text-start d-flex justify-content-between align-items-center py-1" id="ranchDropdownBtn"
-          style="min-width:100px; max-width:150px; font-size: 0.75rem;"
+        <span class="text-secondary fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;" title="Rancho">RANCH</span>
+        <button class="btn btn-sm btn-light border fw-bold text-start d-flex justify-content-between align-items-center" id="ranchDropdownBtn"
+          style="min-width:110px; max-width:150px; font-size: 0.7rem; padding: 2px 8px; background-color: #f8f9fa; border-radius: 4px; border-color: #f1f5f9 !important;"
           (click)="toggleRanchDropdown($event)">
-          <span class="text-truncate me-1">{{ ranchLabel() }}</span>
-          <i class="fa-solid fa-chevron-down text-muted" style="font-size: 0.6rem;"></i>
+          <span class="text-truncate me-2" style="color: #1f2937;">{{ ranchLabel() }}</span>
+          <i class="fa-solid fa-chevron-down text-secondary" style="font-size: 0.6rem;"></i>
         </button>
         @if (ranchOpen()) {
-          <div id="ranchDropdownPanel" class="shadow-lg rounded-3 border-0 bg-white py-1" [style.top.px]="ranchPos().top" [style.left.px]="ranchPos().left"
-            style="display:block; position:fixed; z-index:9999; min-width:140px; max-height:240px; overflow-y:auto;">
+          <div id="ranchDropdownPanel" class="shadow-sm rounded-1 border bg-white py-1" [style.top.px]="ranchPos().top" [style.left.px]="ranchPos().left"
+            style="display:block; position:fixed; z-index:9999; min-width:150px; max-height:280px; overflow-y:auto; border-color: #e5e7eb !important;">
             <label *ngFor="let r of allRanches(); track r"
-              class="dropdown-item d-flex align-items-center gap-2 px-3 py-1 text-dark fw-medium"
+              class="dropdown-item d-flex align-items-center gap-2 px-2 py-1 text-dark fw-medium"
               style="font-size:0.75rem; cursor:pointer;"
               [style.borderTop]="r === ranchOrder()[0] ? '1px solid #f1f5f9; margin-top:2px; padding-top:4px;' : ''">
               <input type="checkbox" class="form-check-input mt-0" style="transform: scale(0.85);" [value]="r" [checked]="isRanchSelected(r)" (change)="toggleRanch(r, $event)">
@@ -51,43 +49,49 @@ import { YEAR_COLORS, CurrencyType } from '../../models/types';
         }
       </div>
 
-      <div class="vr opacity-25 d-none d-md-block" style="height: 20px; align-self: center;"></div>
+      <div class="vr bg-secondary opacity-25 d-none d-md-block" style="height: 16px; align-self: center;"></div>
 
       <!-- Currency Toggle -->
-      <div class="btn-group shadow-sm rounded-pill" role="group">
-        <button type="button" class="btn btn-sm" style="font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 50px 0 0 50px;" [ngClass]="state().currency==='usd' ? 'btn-dark' : 'btn-light text-muted border'" (click)="setCurrency('usd')">USD</button>
-        <button type="button" class="btn btn-sm" style="font-size: 0.7rem; font-weight: 600; padding: 2px 10px; border-radius: 0 50px 50px 0;" [ngClass]="state().currency==='mxn' ? 'btn-dark' : 'btn-light text-muted border'" (click)="setCurrency('mxn')">MXN</button>
+      <div class="d-flex align-items-center bg-light rounded p-1 border" style="background-color: #f8f9fa; border-color: #f1f5f9 !important;">
+        <button type="button" class="btn btn-sm border-0 fw-bold" 
+                style="font-size: 0.65rem; padding: 1px 10px; border-radius: 3px;" 
+                [ngClass]="state().currency==='usd' ? 'bg-white shadow-sm text-dark' : 'text-muted bg-transparent'" 
+                (click)="setCurrency('usd')">USD</button>
+        <button type="button" class="btn btn-sm border-0 fw-bold" 
+                style="font-size: 0.65rem; padding: 1px 10px; border-radius: 3px;" 
+                [ngClass]="state().currency==='mxn' ? 'bg-white shadow-sm text-dark' : 'text-muted bg-transparent'" 
+                (click)="setCurrency('mxn')">MXN</button>
       </div>
 
-      <div class="vr opacity-25 d-none d-md-block" style="height: 20px; align-self: center;"></div>
+      <div class="vr bg-secondary opacity-25 d-none d-md-block" style="height: 16px; align-self: center;"></div>
 
       <!-- Range Sliders -->
       <div class="d-flex align-items-center gap-1">
-        <span class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;"><i class="fa-regular fa-calendar me-1"></i>Del</span>
-        <span class="badge bg-light text-dark shadow-sm border fw-bold" style="font-size: 0.7rem; padding: 4px 6px;">{{ state().fromWeek | number:'2.0-0' }}</span>
-        <input type="range" class="form-range mx-1" style="width: 60px; height: 1.2rem;" [min]="minWeek()" [max]="maxWeek()" [value]="state().fromWeek" (input)="onFromChange($event)">
+        <span class="text-secondary fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;"><i class="fa-regular fa-calendar me-1"></i>DEL</span>
+        <span class="badge bg-light text-dark border fw-bold px-2 py-1" style="font-size: 0.7rem; border-color: #e5e7eb !important;">{{ state().fromWeek | number:'2.0-0' }}</span>
+        <input type="range" class="form-range mx-1" style="width: 50px; height: 1rem;" [min]="minWeek()" [max]="maxWeek()" [value]="state().fromWeek" (input)="onFromChange($event)">
         
-        <span class="text-muted fw-bold ms-1" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;">Al</span>
-        <span class="badge bg-light text-dark shadow-sm border fw-bold" style="font-size: 0.7rem; padding: 4px 6px;">{{ state().toWeek | number:'2.0-0' }}</span>
-        <input type="range" class="form-range mx-1" style="width: 60px; height: 1.2rem;" [min]="minWeek()" [max]="maxWeek()" [value]="state().toWeek" (input)="onToChange($event)">
+        <span class="text-secondary fw-bold ms-1" style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase;">AL</span>
+        <span class="badge bg-light text-dark border fw-bold px-2 py-1" style="font-size: 0.7rem; border-color: #e5e7eb !important;">{{ state().toWeek | number:'2.0-0' }}</span>
+        <input type="range" class="form-range mx-1" style="width: 50px; height: 1rem;" [min]="minWeek()" [max]="maxWeek()" [value]="state().toWeek" (input)="onToChange($event)">
         
-        <span class="badge rounded-pill fw-bold shadow-sm" style="background-color: #fee2e2; color: #991b1b; font-size: 0.65rem; padding: 4px 8px;">
+        <span class="badge fw-bold ms-1" style="background-color: #fee2e2; color: #991b1b; font-size: 0.65rem; padding: 3px 6px; border-radius: 4px;">
           ({{ weekCount() }} sem)
         </span>
       </div>
 
-      <div class="vr opacity-25 d-none d-lg-block" style="height: 20px; align-self: center;"></div>
+      <div class="vr bg-secondary opacity-25 d-none d-lg-block" style="height: 16px; align-self: center;"></div>
 
       <!-- Years -->
       <div class="d-flex align-items-center gap-1">
-        <span class="text-muted" style="font-size: 0.85rem;" title="Años"><i class="fa-solid fa-clock-rotate-left"></i></span>
-        <div class="d-flex flex-wrap gap-2 px-1">
+        <span class="text-secondary" style="font-size: 0.75rem;" title="Años"><i class="fa-solid fa-clock-rotate-left"></i></span>
+        <div class="d-flex flex-wrap gap-1 px-1">
           @for (y of dataYears(); track y) {
-            <button class="btn btn-sm rounded-pill fw-bold" 
+            <button class="btn btn-sm fw-bold" 
               [class.shadow-sm]="isYearActive(y)"
-              style="font-size: 0.65rem; padding: 2px 8px; transition: all 0.2s;"
-              [style.color]="YEAR_COLORS[y]||'#888'"
-              [style.backgroundColor]="isYearActive(y) ? (YEAR_COLORS[y]+'20') : 'transparent'"
+              style="font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; transition: all 0.1s;"
+              [style.color]="isYearActive(y) ? (YEAR_COLORS[y]||'#1f2937') : '#9ca3af'"
+              [style.backgroundColor]="isYearActive(y) ? (YEAR_COLORS[y]+'15') : 'transparent'"
               [style.border]="isYearActive(y) ? ('1px solid ' + YEAR_COLORS[y]) : '1px solid transparent'"
               (click)="toggleYear(y)">{{ y }}</button>
           }
@@ -96,14 +100,13 @@ import { YEAR_COLORS, CurrencyType } from '../../models/types';
 
       <div class="ms-auto d-flex align-items-center gap-2">
         @if (!isServiciosCat()) {
-          <button class="btn btn-sm btn-outline-success d-flex align-items-center gap-2 fw-semibold" style="font-size: 0.75rem; padding: 4px 8px;" (click)="verProductos.emit()" title="Ver rangos de productos">
+          <button class="btn btn-sm btn-light border fw-bold d-flex align-items-center gap-1 px-2 py-1" style="font-size: 0.7rem; border-radius: 4px; color: #1f2937;" (click)="verProductos.emit()" title="Ver rangos de productos">
             <i class="fa-solid fa-boxes-stacked"></i>
-            <span>Rangos de productos</span>
+            <span>Productos</span>
           </button>
         }
 
-        <!-- Reload Button using Bootstrap & FontAwesome -->
-        <button class="btn btn-sm d-flex align-items-center gap-2 text-white fw-semibold" style="background-color: #800020; border: none; font-size: 0.75rem; padding: 4px 8px;" (click)="openReloadModal()" title="Recargar datos completos">
+        <button class="btn btn-sm d-flex align-items-center gap-1 text-white fw-bold px-2 py-1" style="background-color: #0f766e; border-radius: 4px; border: none; font-size: 0.7rem;" (click)="openReloadModal()" title="Recargar datos completos">
           <i class="fa-solid fa-cloud-arrow-down"></i>
           <span>Recargar</span>
         </button>
@@ -112,24 +115,24 @@ import { YEAR_COLORS, CurrencyType } from '../../models/types';
 
     <!-- Password Modal for Reload -->
     @if (showPasswordModal()) {
-      <div class="modal-backdrop fade show" style="z-index: 9998; background: rgba(0,0,0,0.5); position: fixed; inset: 0;"></div>
+      <div class="modal-backdrop fade show" style="z-index: 9998; background: rgba(0,0,0,0.5); position: fixed; inset: 0; backdrop-filter: blur(4px);"></div>
       <div class="modal fade show" style="display: block; z-index: 9999; position: fixed; top: 0; left: 0; width: 100%; height: 100%;" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content shadow-lg border-0 rounded-3">
-            <div class="modal-header bg-light border-bottom-0">
-              <h5 class="modal-title fw-bold text-dark" style="font-size: 1.1rem;"><i class="fa-solid fa-lock text-danger me-2"></i> Autenticación Requerida</h5>
+          <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-header border-bottom-0 pb-0">
+              <h5 class="modal-title fw-bold text-dark" style="font-size: 1.2rem;"><i class="fa-solid fa-shield-halved text-primary me-2"></i> Autenticación</h5>
               <button type="button" class="btn-close" (click)="showPasswordModal.set(false)"></button>
             </div>
             <div class="modal-body p-4">
-              <p class="text-muted mb-3" style="font-size: 0.9rem;">La recarga completa de datos desde la base de datos requiere autorización. Ingresa la contraseña maestra.</p>
-              <input type="password" class="form-control form-control-lg" placeholder="Contraseña..." [value]="passwordInput()" (input)="onPasswordInput($event)" (keyup.enter)="confirmReload()">
+              <p class="text-secondary mb-3" style="font-size: 0.95rem;">La recarga completa de datos desde la base de datos requiere autorización. Ingresa la contraseña maestra.</p>
+              <input type="password" class="form-control form-control-lg bg-light border-0 shadow-sm rounded-3 px-4" placeholder="Contraseña..." [value]="passwordInput()" (input)="onPasswordInput($event)" (keyup.enter)="confirmReload()">
               @if (passwordError()) {
-                <div class="text-danger mt-2 small fw-semibold"><i class="fa-solid fa-circle-exclamation"></i> Contraseña incorrecta. Intenta nuevamente.</div>
+                <div class="text-danger mt-3 small fw-semibold bg-danger bg-opacity-10 p-2 rounded-3"><i class="fa-solid fa-circle-exclamation me-1"></i> Contraseña incorrecta. Intenta nuevamente.</div>
               }
             </div>
-            <div class="modal-footer border-top-0">
-              <button type="button" class="btn btn-light" (click)="showPasswordModal.set(false)">Cancelar</button>
-              <button type="button" class="btn btn-danger px-4" style="background-color: #800020;" (click)="confirmReload()">
+            <div class="modal-footer border-top-0 pt-0">
+              <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" (click)="showPasswordModal.set(false)">Cancelar</button>
+              <button type="button" class="btn text-white rounded-pill px-4 fw-medium shadow-sm" style="background: linear-gradient(135deg, #1f2937, #111827);" (click)="confirmReload()">
                 <i class="fa-solid fa-cloud-arrow-down me-1"></i> Autorizar Recarga
               </button>
             </div>

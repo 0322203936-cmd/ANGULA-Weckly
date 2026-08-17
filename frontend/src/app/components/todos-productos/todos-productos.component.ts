@@ -63,9 +63,9 @@ function sumUnits(val1: any, val2: any): string {
       <!-- Loading Screen -->
       @if (loading()) {
         <div style="position: fixed; inset: 0; background-color: rgba(255,255,255,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;">
-          <div style="font-size: 16px; font-weight: 600; color: #5a1414; margin-bottom: 8px;">Cargando datos...</div>
+          <div style="font-size: 16px; font-weight: 600; color: #115e59; margin-bottom: 8px;">Cargando datos...</div>
           <div style="width: 150px; height: 3px; background-color: #e2e8f0; border-radius: 999px; overflow: hidden; position: relative;">
-            <div style="position: absolute; top: 0; left: 0; bottom: 0; width: 40%; background-color: #8a1c32; animation: slide 1.2s infinite ease-in-out;"></div>
+            <div style="position: absolute; top: 0; left: 0; bottom: 0; width: 40%; background-color: #0f766e; animation: slide 1.2s infinite ease-in-out;"></div>
           </div>
         </div>
       }
@@ -368,7 +368,7 @@ export class TodosProductosComponent implements OnInit {
       case 'metros':
         return { border: '#0284c7', bg: '#f0f9ff' };
       case 'tallos_cos':
-        return { border: '#8a1c32', bg: '#fdf2f2' };
+        return { border: '#0f766e', bg: '#fdf2f2' };
       case 'tallos_comp':
         return { border: '#7c3aed', bg: '#f5f3ff' };
       case 'tallos_des':
@@ -378,7 +378,7 @@ export class TodosProductosComponent implements OnInit {
       case 'inv_final':
         return { border: '#0d9488', bg: '#f0fdfa' };
       default:
-        return { border: '#8a1c32', bg: '#fdf2f2' };
+        return { border: '#0f766e', bg: '#fdf2f2' };
     }
   }
 

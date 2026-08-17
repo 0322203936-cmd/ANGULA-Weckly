@@ -33,15 +33,13 @@ import { ProductPanelComponent } from '../product-panel/product-panel.component'
         <app-toolbar (verProductos)="onVerProductos()" (reload)="onReload()" />
 
         <!-- View Tabs -->
-        <div class="view-tabs-container">
-          @if (!isServiciosCat()) {
+        @if (!isServiciosCat()) {
+          <div class="view-tabs-container">
             <button class="cfbc-tab" [class.active]="stateService.state().view === 'comparativo'" (click)="setView('comparativo'); activePanels.set([])">Comparativo</button>
             <button class="cfbc-tab" [class.active]="stateService.state().view === 'rancho'" (click)="setView('rancho'); activePanels.set([])">Por Rancho</button>
-          }
-          @if (isServiciosCat()) {
-            <button class="cfbc-tab" [class.active]="stateService.state().view === 'servicios'" (click)="setView('servicios'); activePanels.set([])">Costo Servicios</button>
-          }
-        </div>
+          </div>
+        }
+
 
         <!-- View Content -->
         @if (stateService.state().view === 'comparativo' && !isServiciosCat()) {

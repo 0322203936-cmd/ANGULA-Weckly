@@ -68,13 +68,13 @@ const MO_GROUPS = [
                     style="min-width:190px;text-align:left;">CONCEPTO</th>
                 @for (rn of activeRanchesInData(); track rn) {
                   <th [attr.colspan]="nColsPerRanch()"
-                      style="text-align:center;border-left:2px solid #d59ca8;background:var(--pt-hdr-bg);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:6px 8px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:3;">
+                      style="text-align:center;border-left:1px solid rgba(255,255,255,0.2);background:var(--pt-hdr-bg);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:6px 8px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:3;">
                     {{ rn }}
                   </th>
                 }
                 @if (showTotal()) {
                   <th [attr.colspan]="nTotalCols()"
-                      style="text-align:center;border-left:3px solid #8a1c32;background:#fafafa;color:#262626;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:6px 8px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:3;">
+                      style="text-align:center;border-left:1px solid rgba(255,255,255,0.2);background:var(--pt-hdr-bg);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:6px 8px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:3;">
                     TOTAL
                   </th>
                 }
@@ -88,32 +88,32 @@ const MO_GROUPS = [
                     </th>
                   }
                   @if (showWeekDif()) {
-                  <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#eecdd3;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
-                    DIF
-                  </th>
-                }
+                    <th style="border-left:1px solid rgba(255,255,255,0.2);font-size:9px;min-width:70px;background:var(--pt-hdr-bg);color:#fff;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
+                      DIF
+                    </th>
+                  }
                 }
                 @if (showTotal()) {
                   @for (key of weekKeys(); track key) {
-                    <th style="border-left:1px solid var(--pt-hdr-border);font-size:9px;min-width:60px;background:#fafafa;color:#262626;font-weight:600;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
+                    <th style="border-left:1px solid rgba(255,255,255,0.2);font-size:9px;min-width:60px;background:var(--pt-hdr-bg);color:#fff;font-weight:600;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                       {{ shortLabel(key) }}
                     </th>
                   }
                   @if (showWeekDif()) {
-                  <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#fafafa;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
+                  <th style="border-left:1px solid rgba(255,255,255,0.2);font-size:9px;min-width:70px;background:var(--pt-hdr-bg);color:#fff;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                     DIF
                   </th>
                 }
                   @if (showYearTotals()) {
                     @for (yr of totYears(); track yr; let yi = $index) {
-                      <th [style.borderLeft]="yi === 0 ? '3px solid #8a1c32' : '1px solid var(--pt-hdr-border)'"
-                          style="font-size:9px;min-width:90px;background:#fafafa;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
+                      <th [style.borderLeft]="yi === 0 ? '1px solid rgba(255,255,255,0.2)' : '1px solid var(--pt-hdr-border)'"
+                          style="font-size:9px;min-width:90px;background:var(--pt-hdr-bg);color:#fff;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                         {{ yr }}
                       </th>
                     }
                     @if (totYears().length >= 2) {
                       @if (showWeekDif()) {
-                  <th style="border-left:1px solid #e5e5e5;font-size:9px;min-width:70px;background:#fafafa;color:#262626;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
+                  <th style="border-left:1px solid rgba(255,255,255,0.2);font-size:9px;min-width:70px;background:var(--pt-hdr-bg);color:#fff;font-weight:700;padding:4px 6px;border-bottom:1px solid var(--pt-hdr-border);border-right:1px solid var(--pt-hdr-border);position:sticky;top:0;z-index:2;text-align:right;">
                         DIF
                       </th>
                 }
@@ -926,25 +926,36 @@ export class ServiciosViewComponent {
     const revMap: Record<string, string> = { 'Ramona': 'Campo-RM', 'Poscosecha': 'PosCo-RM', 'Propagacion': 'Prop-RM' };
     const targetRn = revMap[ranch] || ranch;
     const rData = wkData[targetRn] || {};
+    
+    if (metricKey === 'charolas_trasplante') {
+      if (ranch === 'Propagacion') return 0;
+      return rData['charolas'] || 0;
+    } else if (metricKey === 'charolas_siembra') {
+      if (ranch !== 'Propagacion') return 0;
+      return rData['charolas'] || 0;
+    }
+    
     return rData[metricKey] || 0;
   }
 
   protected unitCostGroupMap: Record<string, { key: string; label: string; title: string }> = {
     'CORTE':          { key: 'tallos_cos',  label: '$ / UNIT',  title: 'Costo Unitario por Tallo Cosechado:' },
-    'TRASPLANTE':     { key: 'charolas',    label: '$ / UNIT',  title: 'Costo Unitario por Charola Sembrada:' },
+    'TRASPLANTE':     { key: 'charolas_trasplante', label: '$ / UNIT',  title: 'Costo Unitario por Planta Sembrada:' },
     'MANEJO PLANTA':  { key: 'metros',      label: '$ / UNIT',  title: 'Costo Unitario por Metro de Siembra:' },
     'MIPE / MIRFE':   { key: 'metros',      label: '$ / UNIT',  title: 'Costo Unitario por Metro de Siembra:' },
+    'SIEMBRA':        { key: 'charolas_siembra',    label: '$ / UNIT',  title: 'Costo Unitario por Charola Sembrada:' },
   };
 
   // ── Siembra metrics (standalone) per group ──
   protected siembraMetricsMap: Record<string, Array<{ key: string; title: string; decimals: number }>> = {
     'CORTE':          [{ key: 'tallos_cos',  title: 'TALLOS COSECHADOS',        decimals: 0 }],
-    'TRASPLANTE':     [{ key: 'charolas',    title: 'NUMERO DE CHAROLAS SEMBRADAS', decimals: 0 }],
+    'TRASPLANTE':     [{ key: 'charolas_trasplante', title: 'NUMERO DE PLANTAS SEMBRADAS', decimals: 0 }],
     'MANEJO PLANTA':  [{ key: 'metros',      title: 'METROS DE SIEMBRA',        decimals: 0 },
                       { key: 'hectareas',   title: 'HECTAREAS EN SIEMBRA',     decimals: 2 }],
     'MIPE / MIRFE':   [{ key: 'metros',      title: 'METROS DE SIEMBRA',        decimals: 0 },
                       { key: 'hectareas',   title: 'HECTAREAS EN SIEMBRA',     decimals: 2 }],
     'TRANSPORTE':     [{ key: 'tallos_cos',  title: 'TALLOS COSECHADOS',        decimals: 0 }],
+    'SIEMBRA':        [{ key: 'charolas_siembra', title: 'NUMERO DE CHAROLAS SEMBRADAS', decimals: 0 }],
   };
 
   protected getSiembraMetrics(label: string): Array<{ key: string; title: string; decimals: number }> | null {

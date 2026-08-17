@@ -206,8 +206,8 @@ export interface UnifiedRow {
     }
   `,
   styles: [`
-    .bg-wine { background-color: #5a1414; }
-    .text-wine { color: #5a1414; }
+    .bg-wine { background-color: #115e59; }
+    .text-wine { color: #115e59; }
     .table-row-hover:hover {
       background-color: #f8fafc !important;
     }
@@ -499,7 +499,7 @@ export class ProductPanelComponent {
       case 'metros':
         return { border: '#0284c7', bg: '#f0f9ff' }; // Blue (Metros)
       case 'tallos_cos':
-        return { border: '#8a1c32', bg: '#fdf2f2' }; // Wine red (Cosechados)
+        return { border: '#0f766e', bg: '#fdf2f2' }; // Wine red (Cosechados)
       case 'tallos_comp':
         return { border: '#7c3aed', bg: '#f5f3ff' }; // Purple (Comprados)
       case 'tallos_des':
@@ -509,7 +509,7 @@ export class ProductPanelComponent {
       case 'inv_final':
         return { border: '#0d9488', bg: '#f0fdfa' }; // Teal (Inventarios)
       default:
-        return { border: '#8a1c32', bg: '#fdf2f2' }; // Fallback to wine/pink
+        return { border: '#0f766e', bg: '#fdf2f2' }; // Fallback to wine/pink
     }
   }
 

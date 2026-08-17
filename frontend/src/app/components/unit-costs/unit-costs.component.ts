@@ -26,16 +26,16 @@ interface UnitCostRow {
           <table class="pt-table" style="border-collapse:collapse;">
             <thead>
               <tr>
-                <th rowspan="2" class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 border border-[#262626] text-left sticky left-0 z-10"
+                <th rowspan="2" class="bg-navy text-white font-semibold uppercase tracking-wider px-2 py-1.5 border  text-left sticky left-0 z-10"
                     style="width:200px;min-width:200px;max-width:200px;">{{ section.title }}</th>
                 @if (showTotal()) {
-                  <th [attr.colspan]="nCols()" class="px-2 py-1.5 border border-gray-200 text-center font-bold"
-                      style="background:var(--pt-hdr-bg);color:#ffffff;border-left:1px solid #ddd;">
+                  <th [attr.colspan]="nCols()" class="px-2 py-1.5 border text-center font-bold"
+                      style="background:var(--pt-hdr-bg);color:#ffffff;">
                     TOTAL SEMANAL
                   </th>
                 }
                 @for (r of activeRanches(); track r) {
-                  <th [attr.colspan]="nCols()" class="px-2 py-1.5 border border-gray-200 text-center font-bold"
+                  <th [attr.colspan]="nCols()" class="px-2 py-1.5 border text-center font-bold"
                       [style.borderLeft]="'1px solid #ddd'"
                       style="background:var(--pt-hdr-bg);color:#ffffff;">
                     {{ r }}
@@ -45,7 +45,7 @@ interface UnitCostRow {
               <tr>
                 @if (showTotal()) {
                   @for (_ of subHeaderCols(); track $index) {
-                    <th class="px-1.5 py-1 text-right border border-gray-200"
+                    <th class="px-1.5 py-1 text-right border"
                         [style.color]="$index < weeks().length ? '#ffffff' : 'rgba(255,255,255,0.7)'"
                         [style.fontSize]="'9px'" [style.width]="'75px'" [style.minWidth]="'75px'"
                         style="background:var(--pt-hdr-bg);font-weight:700;">
@@ -55,7 +55,7 @@ interface UnitCostRow {
                 }
                 @for (r of activeRanches(); track r) {
                   @for (_ of subHeaderCols(); track $index) {
-                    <th class="px-1.5 py-1 text-right border border-gray-200"
+                    <th class="px-1.5 py-1 text-right border"
                         [style.color]="$index < weeks().length ? '#ffffff' : 'rgba(255,255,255,0.7)'"
                         [style.fontSize]="'9px'" [style.width]="'75px'" [style.minWidth]="'75px'"
                         style="background:var(--pt-hdr-bg);font-weight:700;">
@@ -268,3 +268,4 @@ export class UnitCostsComponent {
     return (neg ? '-$' : '$') + s.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 }
+

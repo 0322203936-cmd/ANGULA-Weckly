@@ -17,10 +17,10 @@ import { UnitCostsComponent } from '../unit-costs/unit-costs.component';
             <tr>
               <th rowspan="2" class="pt-pinned" style="width:200px;min-width:200px;max-width:200px;text-align:left;">CATEGOR&Iacute;A</th>
               @if (showTotal()) {
-                <th [attr.colspan]="nCols()" style="text-align:center;border-left:3px solid #8a1c32;background:var(--pt-hdr-bg);color:#ffffff;">TOTAL SEMANAL</th>
+                <th [attr.colspan]="nCols()" style="text-align:center;border-left:1px solid #0f766e;background:var(--pt-hdr-bg);color:#ffffff;">TOTAL SEMANAL</th>
               }
               @for (r of activeRanches(); track r) {
-                <th [attr.colspan]="nCols()" style="text-align:center;border-left:2px solid #d59ca8;background:var(--pt-hdr-bg);color:#ffffff;">{{ r }}</th>
+                <th [attr.colspan]="nCols()" style="text-align:center;border-left:1px solid rgba(255,255,255,0.2);background:var(--pt-hdr-bg);color:#ffffff;">{{ r }}</th>
               }
             </tr>
             <!-- Header Row 2 -->
